@@ -1,5 +1,5 @@
 (function() {
-  var DragDrop, Kaleidoscope, c, dragger, gui, image, kaleidoscope, onChange, onMouseMoved, options, startAnimation, toggleInteractive, tr, tx, ty, update, _i, _len, _ref,
+  var DragDrop, Kaleidoscope, c, cyclePos, dragger, gui, image, imagesPath, kaleidoscope, onChange, onMouseMoved, options, presetImages, sameImageCycles, startAnimation, toggleInteractive, tr, tx, ty, update, _i, _len, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     _this = this;
 
@@ -7,6 +7,10 @@
     Kaleidoscope.prototype.HALF_PI = Math.PI / 2;
 
     Kaleidoscope.prototype.TWO_PI = Math.PI * 2;
+
+    Kaleidoscope.prototype.viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+    Kaleidoscope.prototype.viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
     function Kaleidoscope(options) {
       var key, val, _ref, _ref1;
@@ -16,8 +20,8 @@
         offsetScale: 1.0,
         offsetX: 0.0,
         offsetY: 0.0,
-        radius: 526,
-        slices: 12,
+        radius: this.viewportWidth / 2,
+        slices: 28,
         zoom: 1.0
       };
       _ref = this.defaults;
@@ -109,13 +113,17 @@
 
   })();
 
+  imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/patterns/';
+
+  presetImages = ['pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg'];
+
   image = new Image;
 
   image.onload = function() {
     return kaleidoscope.draw();
   };
 
-  image.src = 'http://apps.gordeenko.com/Kaleidoscope/patterns/pic.jpg';
+  image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
 
   kaleidoscope = new Kaleidoscope({
     image: image,
@@ -145,7 +153,7 @@
   tr = kaleidoscope.offsetRotation;
 
   options = {
-    interactive: true,
+    interactive: false,
     ease: 0.1
   };
 
@@ -156,14 +164,12 @@
     }
   };
 
-  startAnimation = function() {
-    ty -= 1;
-    return setTimeout(startAnimation, 1000 / 50);
-  };
+  (startAnimation = function() {
+    ty -= .5;
+    return setTimeout(startAnimation, 1000 / 60);
+  })();
 
   window.addEventListener('mousemove', onMouseMoved, false);
-
-  startAnimation();
 
   toggleInteractive = function() {
     return options.interactive = options.interactive === false;
@@ -182,11 +188,22 @@
     return setTimeout(update, 1000 / 60);
   })();
 
+  sameImageCycles = 1;
+
+  (cyclePos = function() {
+    tx += 100;
+    if (sameImageCycles++ > 2) {
+      sameImageCycles = 1;
+      image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
+    }
+    return setTimeout(cyclePos, 1000 * 60);
+  })();
+
   gui = new dat.GUI;
 
   gui.add(kaleidoscope, 'zoom').min(0.25).max(2.0);
 
-  gui.add(kaleidoscope, 'slices').min(6).max(32).step(2);
+  gui.add(kaleidoscope, 'slices').min(6).max(50).step(2);
 
   gui.add(kaleidoscope, 'radius').min(200).max(500);
 
