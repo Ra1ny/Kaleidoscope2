@@ -119,15 +119,15 @@ tr = kaleidoscope.offsetRotation
 options =
   interactive: no
   ease: 0.1
-  
+
+# Mouse movement
 onMouseMoved = ( event ) =>
   
   if options.interactive
     
     tx = event.pageX
-    #ty = event.pageY
-    tr = Math.atan2 tx, ty
- 
+    tr = event.pageY / kaleidoscope.viewportHeight * 360 / 100
+    #tr = Math.atan2 tx, ty 
   
 do startAnimation = =>
      

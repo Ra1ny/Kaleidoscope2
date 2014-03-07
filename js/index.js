@@ -160,7 +160,7 @@
   onMouseMoved = function(event) {
     if (options.interactive) {
       tx = event.pageX;
-      return tr = Math.atan2(tx, ty);
+      return tr = event.pageY / kaleidoscope.viewportHeight * 360 / 100;
     }
   };
 
