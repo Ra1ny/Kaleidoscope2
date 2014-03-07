@@ -169,13 +169,13 @@
     return setTimeout(startAnimation, 1000 / 60);
   })();
 
-  window.addEventListener('mousemove', onMouseMoved, false);
+  document.querySelector('canvas').addEventListener('mousemove', onMouseMoved, false);
 
   toggleInteractive = function() {
     return options.interactive = options.interactive === false;
   };
 
-  window.addEventListener('click', toggleInteractive, false);
+  document.querySelector('canvas').addEventListener('click', toggleInteractive, false);
 
   (update = function() {
     var delta, theta;
@@ -201,21 +201,9 @@
 
   gui = new dat.GUI;
 
-  gui.add(kaleidoscope, 'zoom').min(0.25).max(2.0);
-
   gui.add(kaleidoscope, 'slices').min(6).max(50).step(2);
 
-  gui.add(kaleidoscope, 'radius').min(200).max(500);
-
-  gui.add(kaleidoscope, 'offsetX').min(-kaleidoscope.radius).max(kaleidoscope.radius).listen();
-
-  gui.add(kaleidoscope, 'offsetY').min(-kaleidoscope.radius).max(kaleidoscope.radius).listen();
-
-  gui.add(kaleidoscope, 'offsetRotation').min(-Math.PI).max(Math.PI).listen();
-
-  gui.add(kaleidoscope, 'offsetScale').min(0.5).max(4.0);
-
-  gui.add(options, 'interactive').listen();
+  gui.add(kaleidoscope, 'offsetScale').min(0.5).max(2.0);
 
   gui.close();
 
