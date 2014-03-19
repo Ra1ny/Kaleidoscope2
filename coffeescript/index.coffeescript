@@ -118,7 +118,12 @@ tr = kaleidoscope.offsetRotation
 
 options =
   interactive: no
+  animate: yes
+  reverse: no
+  cycleImages: yes
+  cycleOffset: yes
   ease: 0.1
+  animationSpeed: 0.5
 
 # Mouse movement
 onMouseMoved = ( event ) =>
@@ -130,8 +135,12 @@ onMouseMoved = ( event ) =>
     #tr = Math.atan2 tx, ty 
   
 do startAnimation = =>
-     
-  ty -= .5
+  
+  if options.animate
+    if options.reverse
+      ty += options.animationSpeed
+    else
+      ty -= options.animationSpeed
 
   setTimeout startAnimation, 1000/60
 
@@ -161,13 +170,14 @@ do update = =>
   
 sameImageCycles = 1
   
-do cyclePos = =>
+do cyclePos = => 
   
-  tx += 100
-  
-  if sameImageCycles++ > 2
-    sameImageCycles = 1
-    image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
+  if options.cycleOffset
+    tx += 100
+    if sameImageCycles++ > 2
+      sameImageCycles = 1
+      if options.cycleImages
+        image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
     
   setTimeout cyclePos, 1000 * 60
     
@@ -182,6 +192,11 @@ gui.add( kaleidoscope, 'slices' ).min( 6 ).max( 50 ).step( 2 )
 #gui.add( kaleidoscope, 'offsetRotation' ).min( -Math.PI ).max( Math.PI ).listen()
 gui.add( kaleidoscope, 'offsetScale' ).min( 0.5 ).max( 2.0 )
 #gui.add( options, 'interactive' ).listen()
+gui.add( options, 'animationSpeed').min( 0.1 ).max( 5.0 )
+gui.add options, 'animate'
+gui.add options, 'cycleImages'
+gui.add options, 'cycleOffset'
+gui.add options, 'reverse'
 gui.close()
 
 onChange = =>

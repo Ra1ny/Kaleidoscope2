@@ -154,7 +154,12 @@
 
   options = {
     interactive: false,
-    ease: 0.1
+    animate: true,
+    reverse: false,
+    cycleImages: true,
+    cycleOffset: true,
+    ease: 0.1,
+    animationSpeed: 0.5
   };
 
   onMouseMoved = function(event) {
@@ -165,7 +170,13 @@
   };
 
   (startAnimation = function() {
-    ty -= .5;
+    if (options.animate) {
+      if (options.reverse) {
+        ty += options.animationSpeed;
+      } else {
+        ty -= options.animationSpeed;
+      }
+    }
     return setTimeout(startAnimation, 1000 / 60);
   })();
 
@@ -191,10 +202,14 @@
   sameImageCycles = 1;
 
   (cyclePos = function() {
-    tx += 100;
-    if (sameImageCycles++ > 2) {
-      sameImageCycles = 1;
-      image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
+    if (options.cycleOffset) {
+      tx += 100;
+      if (sameImageCycles++ > 2) {
+        sameImageCycles = 1;
+        if (options.cycleImages) {
+          image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
+        }
+      }
     }
     return setTimeout(cyclePos, 1000 * 60);
   })();
@@ -204,6 +219,16 @@
   gui.add(kaleidoscope, 'slices').min(6).max(50).step(2);
 
   gui.add(kaleidoscope, 'offsetScale').min(0.5).max(2.0);
+
+  gui.add(options, 'animationSpeed').min(0.1).max(5.0);
+
+  gui.add(options, 'animate');
+
+  gui.add(options, 'cycleImages');
+
+  gui.add(options, 'cycleOffset');
+
+  gui.add(options, 'reverse');
 
   gui.close();
 
