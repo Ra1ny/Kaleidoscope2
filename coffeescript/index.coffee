@@ -87,8 +87,8 @@ class DragDrop
       reader.readAsDataURL file
 
 # Init kaleidoscope
-imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/patterns/'
-presetImages = ['pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg']
+imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/images/'
+presetImages = ['pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg']
   
 image = new Image
 image.onload = => do kaleidoscope.draw
@@ -123,7 +123,7 @@ options =
   cycleImages: yes
   cycleOffset: yes
   ease: 0.1
-  animationSpeed: 0.5
+  animationSpeed: 1.0
 
 # Mouse movement
 onMouseMoved = ( event ) =>
@@ -131,8 +131,8 @@ onMouseMoved = ( event ) =>
   if options.interactive
     
     tx = event.pageX
-    tr = event.pageY / kaleidoscope.viewportHeight * 360 / 100
-    #tr = Math.atan2 tx, ty 
+    #tr = event.pageY / kaleidoscope.viewportHeight * 360 / 100
+    tr = Math.atan2 tx, ty
   
 do startAnimation = =>
   
