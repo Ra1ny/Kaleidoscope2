@@ -116,7 +116,7 @@
 
   imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/images/';
 
-  presetImages = ['pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+  presetImages = ['outerspace.jpg', 'pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
 
   image = new Image;
 
@@ -126,7 +126,8 @@
     };
   })(this);
 
-  image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
+  //image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
+  image.src = imagesPath + presetImages[0];
 
   kaleidoscope = new Kaleidoscope({
     image: image,
@@ -159,7 +160,7 @@
     interactive: false,
     animate: true,
     reverse: false,
-    cycleImages: true,
+    cycleImages: false,
     cycleOffset: true,
     ease: 0.1,
     animationSpeed: 1.0
