@@ -2,6 +2,7 @@
 /* line 4, ../sass/style.sass */
 html, body {
   background: black;
+  overflow: hidden;
 }
 
 /* Info */

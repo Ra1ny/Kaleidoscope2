@@ -20,7 +20,7 @@
         offsetScale: 1.0,
         offsetX: 0.0,
         offsetY: 0.0,
-        radius: this.viewportWidth / 2,
+        radius: this.viewportWidth / 2 + (this.viewportWidth / 10),
         slices: 28,
         zoom: 1.0
       };
