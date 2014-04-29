@@ -16,7 +16,7 @@ class Kaleidoscope
       offsetScale: 1.0
       offsetX: 0.0
       offsetY: 0.0
-      radius: @viewportWidth / 2
+      radius: @viewportWidth / 2 + (@viewportWidth / 10)
       slices: 28      
       zoom: 1.0
         
@@ -88,15 +88,16 @@ class DragDrop
 
 # Init kaleidoscope
 imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/images/'
-presetImages = ['pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg']
+presetImages = ['outerspace.jpg', 'pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg']
   
 image = new Image
 image.onload = => do kaleidoscope.draw
-image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
+#image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
+image.src = presetImages[0]
 
 kaleidoscope = new Kaleidoscope
   image: image
-  slices: 20
+  slices: 28
 
 kaleidoscope.domElement.style.position = 'absolute'
 kaleidoscope.domElement.style.marginLeft = -kaleidoscope.radius + 'px'
@@ -180,6 +181,14 @@ do cyclePos = =>
         image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
     
   setTimeout cyclePos, 1000 * 60
+
+nextImage =>
+  currentImage = presetImages.indexOf image.src
+  if currentImage == presetImages.length
+    nextImage = 0
+  else
+    nextImage = presetImages[currentImage + 1]
+  image.src = nextImage
     
 # Init gui
 
@@ -197,6 +206,7 @@ gui.add options, 'animate'
 gui.add options, 'cycleImages'
 gui.add options, 'cycleOffset'
 gui.add options, 'reverse'
+gui.add options, 'nextImage'
 gui.close()
 
 onChange = =>

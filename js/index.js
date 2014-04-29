@@ -126,12 +126,11 @@
     };
   })(this);
 
-  //image.src = imagesPath + presetImages[Math.round(Math.random() * 4)];
-  image.src = imagesPath + presetImages[0];
+  image.src = presetImages[0];
 
   kaleidoscope = new Kaleidoscope({
     image: image,
-    slices: 20
+    slices: 28
   });
 
   kaleidoscope.domElement.style.position = 'absolute';
@@ -160,7 +159,7 @@
     interactive: false,
     animate: true,
     reverse: false,
-    cycleImages: false,
+    cycleImages: true,
     cycleOffset: true,
     ease: 0.1,
     animationSpeed: 1.0
@@ -228,6 +227,19 @@
     };
   })(this))();
 
+  nextImage((function(_this) {
+    return function() {
+      var currentImage, nextImage;
+      currentImage = presetImages.indexOf(image.src);
+      if (currentImage === presetImages.length) {
+        nextImage = 0;
+      } else {
+        nextImage = presetImages[currentImage + 1];
+      }
+      return image.src = nextImage;
+    };
+  })(this));
+
   gui = new dat.GUI;
 
   gui.add(kaleidoscope, 'slices').min(6).max(50).step(2);
@@ -243,6 +255,8 @@
   gui.add(options, 'cycleOffset');
 
   gui.add(options, 'reverse');
+
+  gui.add(options, 'nextImage');
 
   gui.close();
 
