@@ -229,14 +229,15 @@
 
   kaleidoscope.nextImage = (function(_this) {
     return function() {
-      var currentImage, nextImagePath;
-      currentImage = presetImages.indexOf(image.src);
-      if (currentImage === presetImages.length) {
+      var currentImage, currentImageFile, nextImagePath;
+      currentImageFile = image.src.replace(imagesPath, "");
+      currentImage = presetImages.indexOf(currentImageFile);
+      if (currentImage === presetImages.length - 1) {
         nextImagePath = presetImages[0];
       } else {
         nextImagePath = presetImages[currentImage + 1];
       }
-      return image.src = imagesPath + nextImagePath;
+      return kaleidoscope.image.src = imagesPath + nextImagePath;
     };
   })(this);
 

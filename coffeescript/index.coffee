@@ -184,12 +184,13 @@ do cyclePos = =>
 
 kaleidoscope.
   nextImage = =>
-    currentImage = presetImages.indexOf image.src
-    if currentImage == presetImages.length
+    currentImageFile = image.src.replace imagesPath, ""
+    currentImage = presetImages.indexOf currentImageFile
+    if currentImage == presetImages.length - 1
       nextImagePath = presetImages[0]
     else
       nextImagePath = presetImages[currentImage + 1]
-    image.src = imagesPath + nextImagePath
+    kaleidoscope.image.src = imagesPath + nextImagePath
 
 # Init gui
 
