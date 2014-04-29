@@ -126,7 +126,7 @@
     };
   })(this);
 
-  image.src = presetImages[0];
+  image.src = imagesPath + presetImages[0];
 
   kaleidoscope = new Kaleidoscope({
     image: image,
@@ -227,18 +227,18 @@
     };
   })(this))();
 
-  nextImage((function(_this) {
+  kaleidoscope.nextImage = (function(_this) {
     return function() {
-      var currentImage, nextImage;
+      var currentImage, nextImagePath;
       currentImage = presetImages.indexOf(image.src);
       if (currentImage === presetImages.length) {
-        nextImage = 0;
+        nextImagePath = presetImages[0];
       } else {
-        nextImage = presetImages[currentImage + 1];
+        nextImagePath = presetImages[currentImage + 1];
       }
-      return image.src = nextImage;
+      return image.src = imagesPath + nextImagePath;
     };
-  })(this));
+  })(this);
 
   gui = new dat.GUI;
 
@@ -256,7 +256,7 @@
 
   gui.add(options, 'reverse');
 
-  gui.add(options, 'nextImage');
+  gui.add(kaleidoscope, 'nextImage');
 
   gui.close();
 

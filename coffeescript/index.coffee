@@ -93,7 +93,7 @@ presetImages = ['outerspace.jpg', 'pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg',
 image = new Image
 image.onload = => do kaleidoscope.draw
 #image.src = imagesPath + presetImages[Math.round(Math.random()*4)]
-image.src = presetImages[0]
+image.src = imagesPath + presetImages[0]
 
 kaleidoscope = new Kaleidoscope
   image: image
@@ -182,14 +182,15 @@ do cyclePos = =>
     
   setTimeout cyclePos, 1000 * 60
 
-nextImage =>
-  currentImage = presetImages.indexOf image.src
-  if currentImage == presetImages.length
-    nextImage = 0
-  else
-    nextImage = presetImages[currentImage + 1]
-  image.src = nextImage
-    
+kaleidoscope.
+  nextImage = =>
+    currentImage = presetImages.indexOf image.src
+    if currentImage == presetImages.length
+      nextImagePath = presetImages[0]
+    else
+      nextImagePath = presetImages[currentImage + 1]
+    image.src = imagesPath + nextImagePath
+
 # Init gui
 
 gui = new dat.GUI
@@ -206,7 +207,7 @@ gui.add options, 'animate'
 gui.add options, 'cycleImages'
 gui.add options, 'cycleOffset'
 gui.add options, 'reverse'
-gui.add options, 'nextImage'
+gui.add kaleidoscope, 'nextImage'
 gui.close()
 
 onChange = =>
