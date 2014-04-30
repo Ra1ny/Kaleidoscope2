@@ -159,7 +159,7 @@
     interactive: false,
     animate: true,
     reverse: false,
-    cycleImages: true,
+    cycleImages: false,
     cycleOffset: true,
     ease: 0.1,
     animationSpeed: 1.0

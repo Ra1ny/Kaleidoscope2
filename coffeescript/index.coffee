@@ -121,7 +121,7 @@ options =
   interactive: no
   animate: yes
   reverse: no
-  cycleImages: yes
+  cycleImages: no
   cycleOffset: yes
   ease: 0.1
   animationSpeed: 1.0
