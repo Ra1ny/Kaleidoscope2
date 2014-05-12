@@ -86,6 +86,14 @@ class DragDrop
       reader.onload = ( event ) => @callback? event.target.result
       reader.readAsDataURL file
 
+class HashNavigation
+
+  constructor: ->
+    @vals = document.location.hash.replace('#/', '').replace('#', '').split('/')
+
+  getVal: (index) ->
+    @vals[@vals.indexOf(index)+1]
+
 # Init kaleidoscope
 imagesPath = 'http://apps.gordeenko.com/Kaleidoscope/images/'
 presetImages = ['outerspace.jpg', 'pic.jpg', 'pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg']
@@ -192,8 +200,12 @@ kaleidoscope.
       nextImagePath = presetImages[currentImage + 1]
     kaleidoscope.image.src = imagesPath + nextImagePath
 
-# Init gui
 
+# Check options
+hash = new HashNavigation()
+dat.GUI.toggleHide() if hash.getVal('hideControls') == 'true'
+
+# Init gui
 gui = new dat.GUI
 #gui.add( kaleidoscope, 'zoom' ).min( 0.25 ).max( 2.0 )
 gui.add( kaleidoscope, 'slices' ).min( 6 ).max( 50 ).step( 2 )
