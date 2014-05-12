@@ -200,11 +200,6 @@ kaleidoscope.
       nextImagePath = presetImages[currentImage + 1]
     kaleidoscope.image.src = imagesPath + nextImagePath
 
-
-# Check options
-hash = new HashNavigation()
-dat.GUI.toggleHide() if hash.getVal('hideControls') == 'true'
-
 # Init gui
 gui = new dat.GUI
 #gui.add( kaleidoscope, 'zoom' ).min( 0.25 ).max( 2.0 )
@@ -233,4 +228,8 @@ onChange = =>
   do kaleidoscope.draw
 
 ( c.onChange onChange unless c.property is 'interactive' ) for c in gui.__controllers
-  
+
+
+# Check options
+hash = new HashNavigation()
+dat.GUI.toggleHide() if hash.getVal('hideControls') == 'true'

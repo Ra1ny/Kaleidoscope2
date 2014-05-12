@@ -254,12 +254,6 @@
     };
   })(this);
 
-  hash = new HashNavigation();
-
-  if (hash.getVal('hideControls') === 'true') {
-    dat.GUI.toggleHide();
-  }
-
   gui = new dat.GUI;
 
   gui.add(kaleidoscope, 'slices').min(6).max(50).step(2);
@@ -295,6 +289,12 @@
     if (c.property !== 'interactive') {
       c.onChange(onChange);
     }
+  }
+
+  hash = new HashNavigation();
+
+  if (hash.getVal('hideControls') === 'true') {
+    dat.GUI.toggleHide();
   }
 
 }).call(this);
